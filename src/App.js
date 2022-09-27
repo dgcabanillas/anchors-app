@@ -1,25 +1,25 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import Home from "./core/Home";
+import Modal from "./components/Modal";
+import AppProvider from "./context/app/app.provider";
 
-function App() {
+const App = () => {
+  const [show, setShow] = useState( false );
+  const hideModal = () => setShow(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <AppProvider>
+      <Home />
+      <button 
+        onClick={() => { setShow( prevShow => !prevShow )}}
+        className='config__toggle'
+      > 
+        { show ? 'ocultar' : 'mostrarr' }
+        { ' config' }
+      </button>
+      { show && <Modal hideModal={hideModal}/> }
+    </AppProvider>
+  )
 }
 
 export default App;
